@@ -1,17 +1,18 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
+import helmet from "helmet";
 
 import userRouter from "./routes/user.routes.js";
 import jdrouter from "./routes/analysis.routes.js";
 
-dotenv.config();
-
 const app = express();
 const __dirname = path.resolve();
-
+dotenv.config({ path: (".env"), });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
 
 app.use("/users", userRouter);
 app.use("/analysis", jdrouter);
@@ -29,3 +30,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export default app;
+
+

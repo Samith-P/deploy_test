@@ -5,10 +5,6 @@ import connectDB from "./db/connectdb.js";
 
 const __dirname = path.resolve();
 
-dotenv.config({
-  path: path.resolve(".env"),
-});
-
 const PORT = process.env.PORT || 3000;
 
 connectDB()
