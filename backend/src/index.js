@@ -1,11 +1,10 @@
-import path from "path";
 import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+
 import app from "./app.js";
 import connectDB from "./db/connectdb.js";
 
-const __dirname = path.resolve();
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 connectDB()
   .then(() => {
@@ -13,6 +12,6 @@ connectDB()
       console.log(`✅ Server running on port ${PORT}`);
     });
   })
-  .catch((error) => {
-    console.error("❌ Error while starting the service:", error);
+  .catch((err) => {
+    console.error("❌ Error while starting the service:", err);
   });

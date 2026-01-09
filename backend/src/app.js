@@ -1,34 +1,18 @@
 import express from "express";
 import path from "path";
-import dotenv from "dotenv";
+import fs from "fs";
 import helmet from "helmet";
-
 import userRouter from "./routes/user.routes.js";
 import jdrouter from "./routes/analysis.routes.js";
-
 const app = express();
-const __dirname = path.resolve();
-dotenv.config({ path: (".env"), });
+const BASE_DIR = process.cwd();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
 app.use("/users", userRouter);
 app.use("/analysis", jdrouter);
-
-if (process.env.NODE_ENV === "production") {
-  app.use(
-    express.static(path.join(__dirname, "../frontend/dist"))
-  );
-
-  app.get((req, res) => {
-    res.sendFile(
-      path.join(__dirname, "../frontend/dist/index.html")
-    );
-  });
-}
-
+const DIST_DIR = path.join(BASE_DIR, "../frontend/dist");
+app.use(express.static(DIST_DIR));
+app.use((req, res, next) => {
+    return res.sendFile(path.join(DIST_DIR, "index.html"));
+});
 export default app;
-
-
